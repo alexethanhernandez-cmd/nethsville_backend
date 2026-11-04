@@ -1,0 +1,77 @@
+{% extends 'core/base.html' %}
+{% block title %}AI Progress Summary{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>AI Progress Summary</h1>
+  <p class="muted">Teacher flow: observations &rarr; AI draft &rarr; edit &rarr; approve &rarr; makikita na ng parent.</p>
+  <div class="row"><div style="flex:1 1 260px"><label class="muted">Student</label><select id="student"></select></div>
+  <div style="flex:0 0 180px"><label class="muted">Wika ng summary</label><select id="lang"><option value="en">English</option><option value="tl">Filipino / Taglish</option></select></div></div>
+</div>
+
+<div class="card">
+  <h2>1. Teacher Observations</h2>
+  <div class="row"><input id="note" placeholder="Magdagdag ng observation..." style="flex:1 1 300px;width:auto"><button id="addObs">+ Save Observation</button></div>
+  <table style="margin-top:10px"><tbody id="obsList"></tbody></table>
+</div>
+
+<div class="card">
+  <h2>2. AI Draft <span id="srcChip"></span></h2>
+  <button class="primary" id="gen">&#10022; Generate AI Summary</button>
+  <p class="muted" id="warn"></p>
+  <textarea id="draft" rows="6" placeholder="Lalabas dito ang draft. Pwede mo itong i-edit bago i-approve." disabled></textarea>
+  <div class="row" style="margin-top:10px"><button class="primary" id="approve" disabled>&#10003; Approve &amp; Send to Parent</button><span id="approveMsg" class="muted"></span></div>
+</div>
+
+<div class="card">
+  <h2>3. Parent View (approved lang)</h2>
+  <button id="refreshParent">Refresh</button>
+  <div id="parentView" class="muted" style="margin-top:10px">Wala pang approved na summary.</div>
+</div>
+
+<script>
+let currentSummary = null;
+const $ = id => document.getElementById(id);
+const sid = () => $('student').value;
+const api = (url, opts) => fetch(url, opts).then(async r => ({ok: r.ok, data: await r.json()}));
+const post = (url, body) => api(url, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body||{})});
+
+async function loadStudents(){
+  const {data} = await api('/api/students/');
+  $('student').innerHTML = data.students.map(s => `<option value="${s.id}">${s.name} (${s.grade_section})</option>`).join('');
+  loadObs(); loadParent();
+}
+async function loadObs(){
+  const {data} = await api(`/api/students/${sid()}/observations/`);
+  $('obsList').innerHTML = data.observations.map(o => `<tr><td>${o.note}</td></tr>`).join('') || '<tr><td class="muted">Wala pang observations.</td></tr>';
+}
+async function loadParent(){
+  const {data} = await api(`/api/students/${sid()}/parent-view/`);
+  $('parentView').innerHTML = data.summaries.length
+    ? data.summaries.map(s => `<p style="color:#16312B;font-size:14px">${s.final_text}<br><span class="muted">Approved ${new Date(s.approved_at).toLocaleString()}</span></p>`).join('')
+    : 'Wala pang approved na summary.';
+}
+$('student').onchange = () => { currentSummary=null; $('draft').value=''; $('draft').disabled=true; $('approve').disabled=true; $('srcChip').innerHTML=''; $('warn').textContent=''; loadObs(); loadParent(); };
+$('addObs').onclick = async () => {
+  const note = $('note').value.trim(); if(!note) return;
+  await post(`/api/students/${sid()}/observations/`, {note}); $('note').value=''; loadObs();
+};
+$('gen').onclick = async () => {
+  $('gen').disabled = true; $('gen').textContent = 'Generating...';
+  const {ok, data} = await post(`/api/students/${sid()}/summary/generate/`, {lang: $('lang').value});
+  $('gen').disabled = false; $('gen').innerHTML = '&#10022; Generate AI Summary';
+  if(!ok){ $('warn').textContent = data.error; return; }
+  currentSummary = data;
+  $('draft').value = data.draft_text; $('draft').disabled = false; $('approve').disabled = false; $('approveMsg').textContent='';
+  $('srcChip').innerHTML = data.source === 'anthropic'
+    ? `<span class="chip ok">&#10022; AI-generated (${data.model})</span>`
+    : '<span class="chip warn">Offline rule-based &mdash; hindi AI</span>';
+  $('warn').textContent = data.warning || '';
+};
+$('approve').onclick = async () => {
+  const {ok, data} = await post(`/api/summaries/${currentSummary.id}/approve/`, {final_text: $('draft').value});
+  if(ok){ $('approveMsg').textContent = 'Approved! Nakikita na ito ng parent.'; $('approve').disabled = true; loadParent(); }
+};
+$('refreshParent').onclick = loadParent;
+loadStudents();
+</script>
+{% endblock %}

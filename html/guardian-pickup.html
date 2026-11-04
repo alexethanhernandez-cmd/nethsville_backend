@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guardian Pickup · Nethsville Academy</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/guardian-pickup.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar: desktop only -->
+  <aside class="sidebar" aria-label="Main navigation">
+    <div class="side-brand">
+      <div class="side-logo">NA</div>
+      <div>
+        <div class="side-school">Nethsville Academy</div>
+        <div class="side-sub">Teacher Portal</div>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <a class="nav-link" href="dashboard-teacher.html">Dashboard</a>
+      <a class="nav-link" href="students.html">Students &amp; Guardians</a>
+      <a class="nav-link" href="attendance.html">Attendance &amp; Activities</a>
+      <a class="nav-link" href="child-progress.html">Child Progress</a>
+      <a class="nav-link active" href="guardian-pickup.html" aria-current="page">Guardian Pickup</a>
+      <a class="nav-link" href="reports.html">Reports</a>
+    </nav>
+
+    <button class="side-logout" id="sideLogout" type="button">Log Out</button>
+  </aside>
+
+  <div class="content">
+
+    <header class="topbar">
+      <h1 class="page-name">Guardian Pickup</h1>
+      <div class="top-actions">
+        <div class="avatar">MS</div>
+        <button class="logout-top" id="topLogout" type="button">Log out</button>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <div class="demo-note" role="note">
+        <span aria-hidden="true">ⓘ</span>
+        <span><strong>Live scanner.</strong> Scans are verified by the Django backend (<code>127.0.0.1:8000</code>). The sample buttons below are demo previews only.</span>
+      </div>
+
+      <div class="grid-2">
+
+        <!-- Scanner -->
+        <section class="card" aria-labelledby="scanTitle">
+          <div class="card-head">
+            <h2 id="scanTitle">QR Scanner</h2>
+            <p class="sub">Scan a guardian's QR with the camera, or paste the QR token.</p>
+          </div>
+
+          <div class="scanner" id="scanner" aria-live="polite">
+            <div class="scanner-frame" aria-hidden="true"></div>
+            <div id="qrReader" style="display:none;width:100%;max-width:320px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden"></div>
+            <p class="scanner-text" id="scanText">Camera is off</p>
+          </div>
+
+          <div class="scan-buttons" style="margin-bottom:12px">
+            <button class="btn-small" type="button" id="camBtn">Start camera</button>
+          </div>
+
+          <div class="field" style="margin-bottom:12px">
+            <label for="tokenInput">Or paste QR token</label>
+            <div style="display:flex;gap:8px">
+              <input id="tokenInput" type="text" placeholder="Paste the token here" style="flex:1;min-width:0">
+              <button class="btn-small" type="button" id="verifyBtn">Verify</button>
+            </div>
+          </div>
+
+          <p class="sub" style="margin:8px 0">Sample results (demo only)</p>
+
+          <div class="scan-buttons">
+            <button class="btn-outline scan-btn" type="button" data-scan="verified">Verified QR</button>
+            <button class="btn-outline scan-btn" type="button" data-scan="notAuthorized">Not authorized</button>
+            <button class="btn-outline scan-btn" type="button" data-scan="expired">Expired QR</button>
+          </div>
+        </section>
+
+        <!-- Result -->
+        <section class="card" aria-labelledby="resultTitle">
+          <div class="card-head">
+            <h2 id="resultTitle">Scan Result</h2>
+          </div>
+
+          <div class="result" id="resultCard" data-state="idle">
+            <p class="empty show" id="resultIdle">Scan a QR code to see the result here.</p>
+
+            <div id="resultBody" hidden>
+              <div class="result-top">
+                <span class="pill" id="resultPill"></span>
+                <span class="result-time" id="resultTime"></span>
+              </div>
+              <h3 class="result-title" id="resultTitle2"></h3>
+              <dl class="result-grid">
+                <div><dt>Student</dt><dd id="rStudent"></dd></div>
+                <div><dt>Guardian</dt><dd id="rGuardian"></dd></div>
+                <div><dt>Relationship</dt><dd id="rRel"></dd></div>
+              </dl>
+              <p class="result-note" id="resultNote"></p>
+              <div class="actions" id="resultActions"></div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Pickup log -->
+      <section class="card" aria-labelledby="logTitle">
+        <div class="card-head">
+          <h2 id="logTitle">Pickup Log Today</h2>
+        </div>
+        <ul class="log-list" id="pickupLog"></ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Bottom navigation: mobile only -->
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <div class="bottom-nav-inner">
+      <a class="bn-item" href="dashboard-teacher.html"><span class="bn-dot"></span>Dashboard</a>
+      <a class="bn-item" href="students.html"><span class="bn-dot"></span>Students</a>
+      <a class="bn-item" href="attendance.html"><span class="bn-dot"></span>Attendance</a>
+      <a class="bn-item" href="child-progress.html"><span class="bn-dot"></span>Progress</a>
+      <a class="bn-item active" href="guardian-pickup.html" aria-current="page"><span class="bn-dot"></span>Pickup</a>
+    </div>
+  </nav>
+
+</div>
+
+<!-- Report incident modal -->
+<div class="overlay" id="reportOverlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+    <div class="modal-head">
+      <h2 id="reportTitle">Report Pickup Incident</h2>
+      <button class="close-x" type="button" data-close="reportOverlay" aria-label="Close">&times;</button>
+    </div>
+    <form id="reportForm" novalidate>
+      <div class="field" id="reasonField">
+        <label for="rReason">Reason</label>
+        <select id="rReason">
+          <option value="">Select a reason</option>
+          <option>Person not on the authorized list</option>
+          <option>Suspicious or unclear ID</option>
+          <option>Expired or invalid QR</option>
+          <option>Other</option>
+        </select>
+        <div class="helper">Please select a reason.</div>
+      </div>
+      <div class="field" id="noteField">
+        <label for="rNote">Details</label>
+        <textarea id="rNote" rows="3" placeholder="e.g. Person claimed to be a cousin, no QR shown."></textarea>
+        <div class="helper">Please add details.</div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-outline" type="button" data-close="reportOverlay">Cancel</button>
+        <button class="btn-small" type="submit">Submit Report</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="../js/guardian-pickup.js"></script>
+</body>
+</html>

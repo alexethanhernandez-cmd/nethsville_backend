@@ -1,0 +1,65 @@
+/* Placeholder pages (Reports, Messages). Shared tokens come from base.css. */
+
+body { margin: 0; }
+
+/* Topbar */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.page-name { margin: 0; font-size: 18px; font-weight: 700; }
+.logout-top {
+  border: 0;
+  background: none;
+  color: var(--muted, #667085);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Main */
+.main {
+  padding: 16px;
+  max-width: 1000px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.main > * + * { margin-top: 14px; }
+
+.back-link {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green, #1F3B2F);
+  text-decoration: none;
+}
+.back-link:hover { text-decoration: underline; }
+
+/* Card */
+.card {
+  background: var(--card, #fff);
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 12px);
+  padding: 16px;
+}
+.placeholder {
+  text-align: center;
+  padding: 40px 20px;
+}
+.ph-icon { font-size: 36px; }
+.placeholder h2 { margin: 12px 0 0; font-size: 18px; font-weight: 700; }
+.sub { margin: 6px 0 0; font-size: 13px; color: var(--muted, #667085); line-height: 1.5; }
+
+/* Desktop */
+@media (min-width: 900px) {
+  .topbar { padding: 16px 28px; }
+  .main { padding: 24px 28px 40px; }
+}

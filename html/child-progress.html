@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Child Progress · Nethsville Academy</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/child-progress.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar: desktop only -->
+  <aside class="sidebar" aria-label="Main navigation">
+    <div class="side-brand">
+      <div class="side-logo">NA</div>
+      <div>
+        <div class="side-school">Nethsville Academy</div>
+        <div class="side-sub">Teacher Portal</div>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <a class="nav-link" href="dashboard-teacher.html">Dashboard</a>
+      <a class="nav-link" href="students.html">Students &amp; Guardians</a>
+      <a class="nav-link" href="attendance.html">Attendance &amp; Activities</a>
+      <a class="nav-link active" href="child-progress.html" aria-current="page">Child Progress</a>
+      <a class="nav-link" href="guardian-pickup.html">Guardian Pickup</a>
+      <a class="nav-link" href="reports.html">Reports</a>
+    </nav>
+
+    <button class="side-logout" id="sideLogout" type="button">Log Out</button>
+  </aside>
+
+  <div class="content">
+
+    <header class="topbar">
+      <div class="tb-left">
+        <button class="icon-btn" id="menuBtn" type="button" aria-label="Open page menu" aria-expanded="false" aria-controls="drawer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+        <h1 class="page-name" id="pageName">Child Progress</h1>
+      </div>
+
+      <div class="profile-wrap">
+        <button class="avatar-btn" id="profileBtn" type="button" aria-label="Account" aria-expanded="false" aria-controls="profilePop">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/>
+          </svg>
+        </button>
+
+        <div class="popover" id="profilePop" role="dialog" aria-label="Account information">
+          <div class="pp-head">
+            <div class="pp-avatar" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="pp-name" id="ppName"></div>
+              <div class="pp-role" id="ppRole"></div>
+            </div>
+          </div>
+          <dl class="pp-info" id="ppInfo"></dl>
+          <button class="btn-outline pp-logout" id="ppLogout" type="button">Log out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <div class="demo-note" role="note">
+        <span aria-hidden="true">ⓘ</span>
+        <span><strong>Demo.</strong> Data and actions shown are sample previews and are not yet connected to the school's database. The summary is a sample template, not a live AI result.</span>
+      </div>
+
+      <section class="card toolbar-card">
+        <label class="inline-label" for="studentSelect">Student</label>
+        <select id="studentSelect"></select>
+      </section>
+
+      <!-- Grades -->
+      <section class="card" data-section="grades" aria-labelledby="gradeTitle">
+        <div class="card-head">
+          <h2 id="gradeTitle">Grades</h2>
+          <p class="sub">Rating scale: Beginning, Developing, Proficient, Advanced</p>
+        </div>
+        <ul class="row-list" id="gradeList"></ul>
+      </section>
+
+      <div class="pair">
+
+        <!-- Evaluation -->
+        <section class="card" data-section="evaluation" aria-labelledby="evalTitle">
+          <div class="card-head">
+            <h2 id="evalTitle">Evaluation</h2>
+            <p class="sub">Observations and notes for this student</p>
+          </div>
+
+          <ul class="obs-list" id="obsList"></ul>
+          <p class="empty" id="obsEmpty">No observations yet for this student.</p>
+
+          <form id="obsForm" novalidate class="obs-form">
+            <div class="field" id="obsTextField">
+              <label for="obsText">New observation</label>
+              <textarea id="obsText" rows="3" placeholder="e.g. Followed the two-step instruction during art."></textarea>
+              <div class="helper">Please write an observation first.</div>
+            </div>
+            <div class="field">
+              <label for="obsCat">Category</label>
+              <select id="obsCat">
+                <option>Academic</option>
+                <option>Social</option>
+                <option>Behavior</option>
+                <option>Health</option>
+              </select>
+            </div>
+            <div class="actions">
+              <button class="btn-small" type="submit">Add Observation</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Feedback -->
+        <section class="card" data-section="feedback" aria-labelledby="fbTitle">
+          <div class="card-head">
+            <h2 id="fbTitle">Feedback</h2>
+            <p class="sub">Draft a summary for the parent, review it, then send.</p>
+          </div>
+
+          <div class="actions start">
+            <button class="btn-outline" type="button" id="genBtn">Generate Summary Draft</button>
+          </div>
+
+          <div class="loading" id="genLoading" role="status" aria-live="polite" hidden>
+            <span class="spinner" aria-hidden="true"></span>
+            <span>Generating draft…</span>
+          </div>
+
+          <div class="field">
+            <label for="draftText">Draft message to parent / guardian</label>
+            <textarea id="draftText" rows="8" placeholder="Click Generate Summary Draft to create a draft."></textarea>
+          </div>
+
+          <p class="status-line" id="draftNote" aria-live="polite"></p>
+
+          <div class="actions">
+            <button class="btn-outline" type="button" id="discardBtn">Discard</button>
+            <button class="btn-small" type="button" id="sendBtn" disabled>Send to Parent</button>
+          </div>
+
+          <h3 class="sub-title">Progress Timeline</h3>
+          <ul class="tl-list" id="timeline"></ul>
+          <p class="empty" id="tlEmpty">No progress updates sent yet.</p>
+        </section>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Bottom navigation: mobile only -->
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <div class="bottom-nav-inner">
+      <a class="bn-item" href="dashboard-teacher.html"><span class="bn-dot"></span>Dashboard</a>
+      <a class="bn-item" href="students.html"><span class="bn-dot"></span>Students</a>
+      <a class="bn-item" href="attendance.html"><span class="bn-dot"></span>Attendance</a>
+      <a class="bn-item active" href="child-progress.html" aria-current="page"><span class="bn-dot"></span>Progress</a>
+      <a class="bn-item" href="guardian-pickup.html"><span class="bn-dot"></span>Pickup</a>
+    </div>
+  </nav>
+
+</div>
+
+<!-- Page menu drawer (finds sections inside this page) -->
+<div class="drawer-overlay" id="drawerOverlay" aria-hidden="true">
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Find in this page">
+    <div class="drawer-head">
+      <h2>Find in this page</h2>
+      <button class="close-x" type="button" id="drawerClose" aria-label="Close menu">&times;</button>
+    </div>
+    <ul class="drawer-list" id="drawerList">
+      <li><button class="drawer-item active" type="button" data-filter="all">All sections<span>Show everything</span></button></li>
+      <li><button class="drawer-item" type="button" data-filter="grades">Grades<span>Subject ratings</span></button></li>
+      <li><button class="drawer-item" type="button" data-filter="evaluation">Evaluation<span>Observations and notes</span></button></li>
+      <li><button class="drawer-item" type="button" data-filter="feedback">Feedback<span>Parent summary and timeline</span></button></li>
+    </ul>
+  </aside>
+</div>
+
+<!-- Send confirmation modal -->
+<div class="overlay" id="sendOverlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="sendTitle">
+    <div class="modal-head">
+      <h2 id="sendTitle">Send summary to parent?</h2>
+      <button class="close-x" type="button" data-close="sendOverlay" aria-label="Close">&times;</button>
+    </div>
+    <p class="confirm-text" id="sendText"></p>
+    <div class="modal-actions">
+      <button class="btn-outline" type="button" data-close="sendOverlay">Cancel</button>
+      <button class="btn-small" type="button" id="sendConfirmBtn">Send</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../js/child-progress.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Students &amp; Guardians · Nethsville Academy</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%231F3B2F'/%3E%3Cpath d='M5 7c2.5-1 4.5-1 7 1 2.5-2 4.5-2 7-1v10c-2.5-1-4.5-1-7 1-2.5-2-4.5-2-7-1z' fill='none' stroke='%23E9B949' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../css/welcome.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/students.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar: desktop only -->
+  <aside class="sidebar" aria-label="Main navigation">
+    <div class="side-brand">
+      <div class="side-logo">NA</div>
+      <div>
+        <div class="side-school">Nethsville Academy</div>
+        <div class="side-sub">Teacher Portal</div>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <a class="nav-link" href="dashboard-teacher.html">Dashboard</a>
+      <a class="nav-link active" href="students.html" aria-current="page">Students &amp; Guardians</a>
+      <a class="nav-link" href="attendance.html">Attendance &amp; Activities</a>
+      <a class="nav-link" href="child-progress.html">Child Progress</a>
+      <a class="nav-link" href="guardian-pickup.html">Guardian Pickup</a>
+      <a class="nav-link" href="reports.html">Reports</a>
+    </nav>
+
+    <button class="side-logout" id="sideLogout" type="button">Log Out</button>
+  </aside>
+
+  <div class="content">
+
+    <header class="topbar">
+      <h1 class="page-name">Students &amp; Guardians</h1>
+      <div class="top-actions">
+        <div class="avatar">MS</div>
+        <button class="logout-top" id="topLogout" type="button">Log out</button>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <div class="demo-note" role="note">
+        <span aria-hidden="true">ⓘ</span>
+        <span><strong>Demo.</strong> Data and actions shown are sample previews and are not yet connected to the school's database.</span>
+      </div>
+
+      <div class="toolbar">
+        <input type="search" id="searchInput" placeholder="Search student or guardian name" aria-label="Search students or guardians">
+        <select id="statusFilter" aria-label="Filter by status">
+          <option value="all">All statuses</option>
+          <option value="Present">Present</option>
+          <option value="Absent">Absent</option>
+          <option value="Pending">Pending records</option>
+        </select>
+      </div>
+
+      <p class="result-count" id="resultCount" aria-live="polite"></p>
+
+      <ul class="student-list" id="studentList"></ul>
+      <p class="empty" id="emptyMsg">No students match your search.</p>
+
+    </main>
+  </div>
+
+  <!-- Bottom navigation: mobile only -->
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <div class="bottom-nav-inner">
+      <a class="bn-item" href="dashboard-teacher.html"><span class="bn-dot"></span>Dashboard</a>
+      <a class="bn-item active" href="students.html" aria-current="page"><span class="bn-dot"></span>Students</a>
+      <a class="bn-item" href="attendance.html"><span class="bn-dot"></span>Attendance</a>
+      <a class="bn-item" href="child-progress.html"><span class="bn-dot"></span>Progress</a>
+      <a class="bn-item" href="guardian-pickup.html"><span class="bn-dot"></span>Pickup</a>
+    </div>
+  </nav>
+
+</div>
+
+<!-- Student details modal -->
+<div class="overlay" id="studentOverlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="detailName">
+    <div class="modal-head">
+      <h2 id="detailName">Student</h2>
+      <button class="close-x" type="button" data-close="studentOverlay" aria-label="Close">&times;</button>
+    </div>
+    <dl class="detail-grid" id="detailInfo"></dl>
+    <div class="section-title">Guardians</div>
+    <div id="guardianList"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" type="button" data-close="studentOverlay">Close</button>
+      <button class="btn-small" type="button" id="addGuardianBtn">+ Add Guardian</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add guardian modal -->
+<div class="overlay" id="guardianOverlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="guardianTitle">
+    <div class="modal-head">
+      <h2 id="guardianTitle">Add Guardian</h2>
+      <button class="close-x" type="button" id="gClose" aria-label="Close">&times;</button>
+    </div>
+    <form id="guardianForm" novalidate>
+      <div class="field">
+        <label for="gName">Full name</label>
+        <input type="text" id="gName" placeholder="e.g. Maria Dela Cruz">
+        <div class="helper">This field is required.</div>
+      </div>
+      <div class="field">
+        <label for="gRel">Relationship</label>
+        <select id="gRel">
+          <option value="">Select relationship</option>
+          <option>Mother</option>
+          <option>Father</option>
+          <option>Grandmother</option>
+          <option>Grandfather</option>
+          <option>Aunt / Uncle</option>
+          <option>Other</option>
+        </select>
+        <div class="helper">Please select a relationship.</div>
+      </div>
+      <div class="field">
+        <label for="gPhone">Contact number</label>
+        <input type="tel" id="gPhone" placeholder="e.g. 0900 000 0000">
+        <div class="helper">Enter a valid phone number.</div>
+      </div>
+      <label class="checkrow">
+        <input type="checkbox" id="gPickup">
+        Authorized for pickup
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="btn-outline" id="gCancel">Cancel</button>
+        <button type="submit" class="btn-small">Save Guardian</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../js/students.js"></script>
+</body>
+</html>
+www.w3.org

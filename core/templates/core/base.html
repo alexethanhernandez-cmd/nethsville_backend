@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Nethsville Academy{% endblock %}</title>
+<style>
+  :root{--g:#1F5D50;--dg:#163F38;--o:#E8A33D;--bg:#F6F7F3;--tx:#16312B;--bd:#DCE2DA}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--tx)}
+  header{background:var(--dg);color:#fff;padding:14px 24px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  header b{font-size:16px} header a{color:#CFE0DA;text-decoration:none;font-size:14px}
+  header a:hover{color:#fff}
+  main{max-width:980px;margin:24px auto;padding:0 20px;display:flex;flex-direction:column;gap:18px}
+  .card{background:#fff;border:1px solid var(--bd);border-radius:10px;padding:18px}
+  h1{font-size:20px;margin:0} h2{font-size:15px;margin:0 0 10px}
+  .muted{color:#5E6E68;font-size:13px}
+  button{font:inherit;font-weight:700;font-size:13px;padding:10px 16px;border-radius:8px;border:1.5px solid var(--g);background:#fff;color:var(--g);cursor:pointer}
+  button.primary{background:var(--g);color:#fff}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  input,select,textarea{font:inherit;font-size:14px;padding:10px 12px;border:1px solid var(--bd);border-radius:8px;width:100%;background:#FAFBF9}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .chip{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700}
+  .chip.ok{background:#E4F3EC;color:var(--g)} .chip.warn{background:#FBF0DD;color:#8A5A12} .chip.bad{background:#FBE4E1;color:#9B2C1F}
+  table{width:100%;border-collapse:collapse} th{text-align:left;font-size:11px;text-transform:uppercase;color:#8A958F;padding:8px;border-bottom:1px solid var(--bd)}
+  td{padding:9px 8px;font-size:13px;border-bottom:1px solid #EFF2ED}
+</style>
+</head>
+<body>
+<header>
+  <b>Nethsville Academy &middot; Backend Demo</b>
+  <a href="/">Home</a><a href="/demo/summary/">AI Progress Summary</a><a href="/demo/kiosk/">QR Pickup Kiosk</a><a href="/admin/">Django Admin</a>
+</header>
+<main>{% block content %}{% endblock %}</main>
+</body>
+</html>

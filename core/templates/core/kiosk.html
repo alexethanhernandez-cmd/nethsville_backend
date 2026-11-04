@@ -1,0 +1,80 @@
+{% extends 'core/base.html' %}
+{% block title %}QR Pickup Kiosk{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Guardian Pickup Verification</h1>
+  <p class="muted">I-scan ang QR ng guardian gamit ang camera, o i-paste ang token. Bawat scan ay nare-record sa log.</p>
+</div>
+
+<div class="row" style="align-items:stretch">
+  <div class="card" style="flex:1 1 380px">
+    <h2>Scan</h2>
+    <div id="reader" style="width:100%;max-width:340px"></div>
+    <div class="row" style="margin-top:8px"><button id="camBtn">Buksan ang camera</button></div>
+    <p class="muted">Walang camera o internet? I-paste ang token:</p>
+    <div class="row"><input id="token" placeholder="Token mula sa QR"><button class="primary" id="verifyBtn">Verify</button></div>
+    <div id="result" style="margin-top:14px"></div>
+  </div>
+  <div class="card" style="flex:1 1 380px">
+    <h2>Registered Guardians (para sa demo)</h2>
+    <p class="muted">Ipakita ang QR na ito sa camera. Subukan din ang deactivated at ang revoke.</p>
+    <div id="guardians"></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Today's Pickup Log <button id="refreshLog" style="float:right">Refresh</button></h2>
+  <table><thead><tr><th>Time</th><th>Student</th><th>Guardian</th><th>Result</th><th>Reason</th></tr></thead><tbody id="log"></tbody></table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const api = (url, opts) => fetch(url, opts).then(async r => ({ok:r.ok, data: await r.json()}));
+
+async function loadGuardians(){
+  const {data} = await api('/api/guardians/');
+  $('guardians').innerHTML = data.guardians.map(g => `
+    <div class="row" style="margin-bottom:12px;border-bottom:1px solid #EFF2ED;padding-bottom:12px">
+      <img src="${g.qr_url}?t=${Date.now()}" width="110" height="110" alt="QR">
+      <div style="flex:1"><b>${g.name}</b> <span class="muted">(${g.relationship})</span><br>
+        <span class="muted">Student: ${g.student}</span><br>
+        ${g.is_active ? '<span class="chip ok">Active</span>' : '<span class="chip bad">Deactivated</span>'}
+        <button onclick="revoke(${g.id})" style="margin-top:6px">Revoke QR</button></div>
+    </div>`).join('');
+}
+async function revoke(id){ await fetch(`/api/guardians/${id}/revoke-qr/`, {method:'POST'}); loadGuardians(); }
+
+async function loadLog(){
+  const {data} = await api('/api/pickup/log/');
+  $('log').innerHTML = data.log.map(l => `<tr><td>${new Date(l.scanned_at).toLocaleTimeString()}</td><td>${l.student||'-'}</td><td>${l.guardian||'-'}</td>
+    <td>${l.result==='verified' ? '<span class="chip ok">Verified</span>' : '<span class="chip bad">Denied</span>'}</td><td>${l.reason||''}</td></tr>`).join('')
+    || '<tr><td colspan="5" class="muted">Wala pang scan.</td></tr>';
+}
+
+async function verify(token){
+  const {ok, data} = await api('/api/pickup/verify/', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({token})});
+  $('result').innerHTML = ok
+    ? `<div class="card" style="border-color:#1F5D50"><span class="chip ok">&#10003; Verified Authorized Guardian</span>
+       <p><b>${data.guardian.name}</b> (${data.guardian.relationship})<br>Picking up: <b>${data.student.name}</b> &mdash; ${data.student.grade_section}</p></div>`
+    : `<div class="card" style="border-color:#9B2C1F"><span class="chip bad">&#10005; ACCESS DENIED</span>
+       <p><b>${data.reason}</b><br><span class="muted">Do not release the child. Verify identity with the teacher or admin.</span></p></div>`;
+  loadLog();
+}
+$('verifyBtn').onclick = () => verify($('token').value.trim());
+$('refreshLog').onclick = loadLog;
+
+let scanner = null;
+$('camBtn').onclick = async () => {
+  if(typeof Html5Qrcode === 'undefined'){ alert('Kailangan ng internet para sa camera scanner. Gamitin ang paste ng token.'); return; }
+  if(scanner){ await scanner.stop(); scanner=null; $('camBtn').textContent='Buksan ang camera'; return; }
+  scanner = new Html5Qrcode('reader');
+  let busy = false;
+  await scanner.start({facingMode:'environment'}, {fps:10, qrbox:220}, async text => {
+    if(busy) return; busy = true; await verify(text); setTimeout(()=>busy=false, 2500);
+  });
+  $('camBtn').textContent = 'Isara ang camera';
+};
+loadGuardians(); loadLog();
+</script>
+{% endblock %}

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parent Portal · Nethsville Academy</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/parent-portal.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar: desktop only -->
+  <aside class="sidebar" aria-label="Main navigation">
+    <div class="side-brand">
+      <div class="side-logo">NA</div>
+      <div>
+        <div class="side-school">Nethsville Academy</div>
+        <div class="side-sub">Parent Portal</div>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <a class="nav-link active" href="parent-portal.html" aria-current="page">Home</a>
+      <a class="nav-link" href="#progress">Progress</a>
+      <a class="nav-link" href="#attendance">Attendance</a>
+      <a class="nav-link" href="#pickup">Pickup</a>
+      <a class="nav-link" href="#messages">Messages</a>
+    </nav>
+
+    <button class="side-logout" id="sideLogout" type="button">Log Out</button>
+  </aside>
+
+  <div class="content">
+
+    <header class="topbar">
+      <h1 class="page-name">Parent Portal</h1>
+      <div class="top-actions">
+        <div class="avatar">CR</div>
+        <button class="logout-top" id="topLogout" type="button">Log out</button>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <div class="demo-note" role="note">
+        <span aria-hidden="true">ⓘ</span>
+        <span><strong>Demo.</strong> Data and actions shown are sample previews and are not yet connected to the school's database.</span>
+      </div>
+
+      <section class="greeting">
+        <h2>Good morning, Carla</h2>
+        <p>Wednesday, October 15, 2026 · Parent / Guardian</p>
+      </section>
+
+      <!-- Child card -->
+      <section class="card child-card" aria-labelledby="childName">
+        <div class="child-main">
+          <div class="child-avatar" aria-hidden="true">MR</div>
+          <div>
+            <h2 id="childName">Mia Ramos</h2>
+            <p class="sub">Kinder 1 · Section Masaya · Teacher: Ms. Santos</p>
+          </div>
+        </div>
+        <span class="pill pill-ok">Present today</span>
+      </section>
+
+      <div class="grid-2">
+
+        <!-- Progress -->
+        <section class="card" id="progress" aria-labelledby="progTitle">
+          <div class="card-head">
+            <h2 id="progTitle">Latest Progress Summary</h2>
+            <p class="sub">From Ms. Santos · Oct 14</p>
+          </div>
+          <div class="summary-body">
+            <p>Dear Parent / Guardian,</p>
+            <p>Mia is doing well in class. She recognizes all uppercase letters and has started to share materials with classmates during art. She came in with a light cough on Oct 14, and we monitored her throughout the day.</p>
+            <p>We look forward to continuing to support Mia's growth.</p>
+            <p>Thank you,<br>Ms. Santos</p>
+          </div>
+          <div class="actions">
+            <span class="pill pill-info" id="ackStatus">Not yet acknowledged</span>
+            <button class="btn-small" type="button" id="ackBtn">Mark as Read</button>
+          </div>
+        </section>
+
+        <!-- Attendance -->
+        <section class="card" id="attendance" aria-labelledby="attTitle">
+          <div class="card-head">
+            <h2 id="attTitle">Attendance This Week</h2>
+          </div>
+          <ul class="row-list" id="attWeek"></ul>
+        </section>
+
+      </div>
+
+      <div class="grid-2">
+
+        <!-- Activities -->
+        <section class="card" aria-labelledby="actTitle">
+          <div class="card-head">
+            <h2 id="actTitle">Today's Activities</h2>
+          </div>
+          <ul class="row-list">
+            <li class="row"><span>Morning Circle</span><span class="row-meta">8:00 AM</span></li>
+            <li class="row"><span>Snack &amp; Free Play</span><span class="row-meta">9:30 AM</span></li>
+            <li class="row"><span>Art Corner</span><span class="row-meta">10:30 AM</span></li>
+            <li class="row"><span>Story Time</span><span class="row-meta">1:00 PM</span></li>
+          </ul>
+        </section>
+
+        <!-- Pickup -->
+        <section class="card" id="pickup" aria-labelledby="pickTitle">
+          <div class="card-head">
+            <h2 id="pickTitle">Authorized Pickup</h2>
+            <p class="sub">These guardians are allowed to pick up Mia.</p>
+          </div>
+          <ul class="row-list">
+            <li class="row"><span>Carla Ramos (Mother)</span><span class="pill pill-ok">Authorized</span></li>
+            <li class="row"><span>Ben Ramos (Father)</span><span class="pill pill-ok">Authorized</span></li>
+          </ul>
+          <div class="actions">
+            <button class="btn-outline" type="button" id="requestBtn">Request Pickup Change</button>
+          </div>
+
+          <div class="sub-title">My requests</div>
+          <ul class="row-list" id="requestList"></ul>
+          <p class="empty" id="requestEmpty">No pickup requests yet.</p>
+        </section>
+
+      </div>
+
+      <!-- Messages -->
+      <section class="card" id="messages" aria-labelledby="msgTitle">
+        <div class="card-head">
+          <h2 id="msgTitle">Messages from School</h2>
+          <p class="sub">Tap a message to mark it as read.</p>
+        </div>
+        <ul class="row-list" id="msgList"></ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Bottom navigation: mobile only -->
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <div class="bottom-nav-inner">
+      <a class="bn-item active" href="parent-portal.html" aria-current="page"><span class="bn-dot"></span>Home</a>
+      <a class="bn-item" href="#progress"><span class="bn-dot"></span>Progress</a>
+      <a class="bn-item" href="#attendance"><span class="bn-dot"></span>Attendance</a>
+      <a class="bn-item" href="#pickup"><span class="bn-dot"></span>Pickup</a>
+      <a class="bn-item" href="#messages"><span class="bn-dot"></span>Messages</a>
+    </div>
+  </nav>
+
+</div>
+
+<!-- Pickup change request modal -->
+<div class="overlay" id="requestOverlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="reqTitle">
+    <div class="modal-head">
+      <h2 id="reqTitle">Request Pickup Change</h2>
+      <button class="close-x" type="button" data-close="requestOverlay" aria-label="Close">&times;</button>
+    </div>
+    <form id="requestForm" novalidate>
+      <div class="field" id="rqNameField">
+        <label for="rqName">Person to authorize</label>
+        <input type="text" id="rqName" placeholder="e.g. Lola Nena Ramos">
+        <div class="helper">This field is required.</div>
+      </div>
+      <div class="field" id="rqDateField">
+        <label for="rqDate">Date</label>
+        <input type="date" id="rqDate">
+        <div class="helper">Please choose a date.</div>
+      </div>
+      <div class="field" id="rqReasonField">
+        <label for="rqReason">Reason</label>
+        <select id="rqReason">
+          <option value="">Select a reason</option>
+          <option>Temporary authorization</option>
+          <option>Different pickup time</option>
+          <option>Change of guardian</option>
+          <option>Other</option>
+        </select>
+        <div class="helper">Please select a reason.</div>
+      </div>
+      <div class="field">
+        <label for="rqNote">Note (optional)</label>
+        <textarea id="rqNote" rows="3" placeholder="Anything the school should know."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-outline" type="button" data-close="requestOverlay">Cancel</button>
+        <button class="btn-small" type="submit">Submit Request</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../js/parent-portal.js"></script>
+</body>
+</html>

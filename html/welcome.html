@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome · Nethsville Academy</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%231F3B2F'/%3E%3Cpath d='M5 7c2.5-1 4.5-1 7 1 2.5-2 4.5-2 7-1v10c-2.5-1-4.5-1-7 1-2.5-2-4.5-2-7-1z' fill='none' stroke='%23E9B949' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../css/welcome.css">
+</head>
+<body>
+
+<section class="hero">
+
+  <!-- Campus silhouette (generic placeholder, not a real school photo) -->
+  <svg class="skyline" viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <g fill="rgba(255,255,255,0.07)">
+      <rect x="0" y="190" width="170" height="130"/>
+      <rect x="150" y="140" width="230" height="180"/>
+      <rect x="400" y="210" width="150" height="110"/>
+      <rect x="540" y="60" width="90" height="260"/>
+      <polygon points="540,60 585,10 630,60"/>
+      <rect x="650" y="150" width="240" height="170"/>
+      <rect x="910" y="110" width="170" height="210"/>
+      <rect x="1100" y="190" width="130" height="130"/>
+      <rect x="1250" y="150" width="190" height="170"/>
+    </g>
+  </svg>
+
+  <!-- Sign-in ribbon (top right) -->
+  <a class="ribbon" href="login.html" aria-label="Sign in">Sign in</a>
+
+  <div class="hero-content">
+    <div class="crest" aria-hidden="true">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 5.5C4.5 4 8 4 12 6c4-2 7.5-2 10-.5V19c-2.5-1.5-6-1.5-10 .5-4-2-7.5-2-10-.5z"/>
+        <line x1="12" y1="6" x2="12" y2="19.5"/>
+      </svg>
+    </div>
+    <p class="kicker">Welcome to</p>
+    <h1>Nethsville Academy</h1>
+    <p class="tagline">Where every child's progress is seen</p>
+  </div>
+
+  <nav class="roles" aria-label="Choose your role">
+
+    <a class="role-card" href="login.html?role=admin" data-role="admin">
+      <div class="rc-top">
+        <svg class="rc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+        </svg>
+      </div>
+      <h2 class="rc-title">Admin</h2>
+      <p class="rc-desc">Manage students, staff accounts, classes, and school reports.</p>
+      <span class="rc-link">Continue →</span>
+    </a>
+
+    <a class="role-card" href="login.html?role=teacher" data-role="teacher">
+      <div class="rc-top">
+        <svg class="rc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2z"/><path d="M22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/>
+        </svg>
+      </div>
+      <h2 class="rc-title">Teacher</h2>
+      <p class="rc-desc">Record attendance, write observations, and send progress summaries.</p>
+      <span class="rc-link">Continue →</span>
+    </a>
+
+    <a class="role-card" href="login.html?role=parent" data-role="parent">
+      <div class="rc-top">
+        <svg class="rc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/>
+          <circle cx="17" cy="9" r="2.5"/><path d="M16 14.5a5 5 0 0 1 6 4.5"/>
+        </svg>
+      </div>
+      <h2 class="rc-title">Parent / Guardian</h2>
+      <p class="rc-desc">See your child's progress, attendance, and pickup history.</p>
+      <span class="rc-link">Continue →</span>
+    </a>
+
+  </nav>
+
+  <p class="demo">Demo. Sample previews only. Not yet connected to the school's database.</p>
+
+</section>
+
+<script src="../js/welcome.js"></script>
+</body>
+</html>
+www.w3.org

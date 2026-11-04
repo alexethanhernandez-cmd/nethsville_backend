@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance &amp; Activities · Nethsville Academy</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/attendance.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar: desktop only -->
+  <aside class="sidebar" aria-label="Main navigation">
+    <div class="side-brand">
+      <div class="side-logo">NA</div>
+      <div>
+        <div class="side-school">Nethsville Academy</div>
+        <div class="side-sub">Teacher Portal</div>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <a class="nav-link" href="dashboard-teacher.html">Dashboard</a>
+      <a class="nav-link" href="students.html">Students &amp; Guardians</a>
+      <a class="nav-link active" href="attendance.html" aria-current="page">Attendance &amp; Activities</a>
+      <a class="nav-link" href="child-progress.html">Child Progress</a>
+      <a class="nav-link" href="guardian-pickup.html">Guardian Pickup</a>
+      <a class="nav-link" href="reports.html">Reports</a>
+    </nav>
+
+    <button class="side-logout" id="sideLogout" type="button">Log Out</button>
+  </aside>
+
+  <div class="content">
+
+    <header class="topbar">
+      <h1 class="page-name">Attendance &amp; Activities</h1>
+      <div class="top-actions">
+        <div class="avatar">MS</div>
+        <button class="logout-top" id="topLogout" type="button">Log out</button>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <div class="demo-note" role="note">
+        <span aria-hidden="true">ⓘ</span>
+        <span><strong>Demo.</strong> Data and actions shown are sample previews and are not yet connected to the school's database.</span>
+      </div>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>Attendance</h2>
+          <p class="sub">Wednesday, October 15, 2026 · Kinder 1 — Section Masaya</p>
+        </div>
+
+        <div class="summary" id="summary" aria-live="polite"></div>
+
+        <ul class="att-list" id="attList"></ul>
+
+        <div class="actions">
+          <button class="btn-outline" type="button" id="markAllBtn">Mark All Present</button>
+          <button class="btn-small" type="button" id="submitBtn">Submit Attendance</button>
+        </div>
+        <p class="status-line" id="submitStatus" aria-live="polite"></p>
+      </section>
+
+      <div class="grid-2">
+
+        <section class="card">
+          <div class="card-head">
+            <h2>Classroom Activities</h2>
+          </div>
+          <ul class="act-list" id="activityList"></ul>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <h2>Activity Log</h2>
+          </div>
+          <ul class="log-list" id="logList"></ul>
+          <p class="empty" id="logEmpty">No entries yet today.</p>
+        </section>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Bottom navigation: mobile only -->
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <div class="bottom-nav-inner">
+      <a class="bn-item" href="dashboard-teacher.html"><span class="bn-dot"></span>Dashboard</a>
+      <a class="bn-item" href="students.html"><span class="bn-dot"></span>Students</a>
+      <a class="bn-item active" href="attendance.html" aria-current="page"><span class="bn-dot"></span>Attendance</a>
+      <a class="bn-item" href="child-progress.html"><span class="bn-dot"></span>Progress</a>
+      <a class="bn-item" href="guardian-pickup.html"><span class="bn-dot"></span>Pickup</a>
+    </div>
+  </nav>
+
+</div>
+
+<!-- Submit confirmation modal -->
+<div class="overlay" id="confirmOverlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="modal-head">
+      <h2 id="confirmTitle">Submit attendance?</h2>
+      <button class="close-x" type="button" data-close="confirmOverlay" aria-label="Close">&times;</button>
+    </div>
+    <p class="confirm-text" id="confirmText"></p>
+    <div class="modal-actions">
+      <button class="btn-outline" type="button" data-close="confirmOverlay">Cancel</button>
+      <button class="btn-small" type="button" id="confirmBtn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../js/attendance.js"></script>
+</body>
+</html>

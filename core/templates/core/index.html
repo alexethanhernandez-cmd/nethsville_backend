@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="card">
+  <h1>Nethsville Academy &mdash; Emerging Technology Demo</h1>
+  <p class="muted">Python / Django backend para sa dalawang emerging technology ng system.</p>
+</div>
+<div class="row" style="align-items:stretch">
+  <div class="card" style="flex:1 1 300px">
+    <h2>1. AI Progress Summary</h2>
+    <p class="muted">Ang teacher ay nagsusulat ng observations. Gumagawa ang AI ng draft. Ire-review at ia-approve ng teacher bago makita ng parent.</p>
+    <a href="/demo/summary/"><button class="primary">Buksan</button></a>
+  </div>
+  <div class="card" style="flex:1 1 300px">
+    <h2>2. QR Guardian Verification</h2>
+    <p class="muted">Bawat guardian ay may signed na QR na may expiry. I-scan sa kiosk para ma-verify o ma-deny, at nare-record sa pickup log.</p>
+    <a href="/demo/kiosk/"><button class="primary">Buksan</button></a>
+  </div>
+</div>
+{% endblock %}

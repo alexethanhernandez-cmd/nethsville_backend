@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard · Nethsville Academy</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/dashboard-admin.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar: desktop only -->
+  <aside class="sidebar" aria-label="Main navigation">
+    <div class="side-brand">
+      <div class="side-logo">NA</div>
+      <div>
+        <div class="side-school">Nethsville Academy</div>
+        <div class="side-sub">Admin Portal</div>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <a class="nav-link active" href="dashboard-admin.html" aria-current="page">Dashboard</a>
+      <a class="nav-link" href="students.html">Students &amp; Guardians</a>
+      <a class="nav-link" href="attendance.html">Attendance &amp; Activities</a>
+      <a class="nav-link" href="guardian-pickup.html">Guardian Pickup</a>
+      <a class="nav-link" href="reports.html">Reports</a>
+    </nav>
+
+    <button class="side-logout" id="sideLogout" type="button">Log Out</button>
+  </aside>
+
+  <div class="content">
+
+    <header class="topbar">
+      <h1 class="page-name">Nethsville Academy</h1>
+      <div class="top-actions">
+        <div class="avatar">AD</div>
+        <button class="logout-top" id="topLogout" type="button">Log out</button>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <div class="demo-note" role="note">
+        <span aria-hidden="true">ⓘ</span>
+        <span><strong>Demo.</strong> Data and actions shown are sample previews and are not yet connected to the school's database.</span>
+      </div>
+
+      <section class="greeting">
+        <h2>Good morning, Admin</h2>
+        <p>Wednesday, October 15, 2026 · School overview</p>
+      </section>
+
+      <!-- Stats -->
+      <section class="stats" aria-label="School overview">
+        <a class="stat" href="students.html">
+          <div class="stat-label">Total Students</div>
+          <div class="stat-value">128</div>
+        </a>
+        <div class="stat">
+          <div class="stat-label">Active Teachers</div>
+          <div class="stat-value">6</div>
+        </div>
+        <div class="stat warning">
+          <div class="stat-label">Pending Enrollments</div>
+          <div class="stat-value" id="pendingCount">0</div>
+        </div>
+        <a class="stat" href="guardian-pickup.html">
+          <div class="stat-label">Pickups Today</div>
+          <div class="stat-value">12</div>
+        </a>
+      </section>
+
+      <div class="grid-2">
+
+        <!-- Pending enrollments -->
+        <section class="card" aria-labelledby="pendingTitle">
+          <div class="card-head">
+            <h2 id="pendingTitle">Pending Enrollments</h2>
+          </div>
+          <div id="pendingList"></div>
+          <p class="empty" id="pendingEmpty">No pending enrollments.</p>
+        </section>
+
+        <!-- Recent activity -->
+        <section class="card" aria-labelledby="actTitle">
+          <div class="card-head">
+            <h2 id="actTitle">Recent Activity</h2>
+          </div>
+          <div class="item">
+            <div>
+              <div class="item-name">Juan Dela Cruz picked up</div>
+              <div class="item-sub">Maria Dela Cruz (Grandmother) · 3:14 PM</div>
+            </div>
+            <span class="pill pill-ok">Verified</span>
+          </div>
+          <div class="item">
+            <div>
+              <div class="item-name">Attendance submitted</div>
+              <div class="item-sub">Kinder 1 · Ms. Santos · 8:00 AM</div>
+            </div>
+            <span class="pill pill-info">Done</span>
+          </div>
+          <div class="item">
+            <div>
+              <div class="item-name">Progress summary sent</div>
+              <div class="item-sub">Juan Dela Cruz · Ms. Santos · Oct 14</div>
+            </div>
+            <span class="pill pill-ok">Sent</span>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Quick actions -->
+      <section class="card" aria-labelledby="quickTitle">
+        <div class="card-head">
+          <h2 id="quickTitle">Quick Actions</h2>
+        </div>
+        <div class="quick">
+          <a class="quick-btn" href="students.html">Manage Students</a>
+          <a class="quick-btn" href="attendance.html">View Attendance</a>
+          <a class="quick-btn" href="guardian-pickup.html">Pickup Monitoring</a>
+          <a class="quick-btn" href="reports.html">View Reports</a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Bottom navigation: mobile only -->
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <div class="bottom-nav-inner">
+      <a class="bn-item active" href="dashboard-admin.html" aria-current="page"><span class="bn-dot"></span>Dashboard</a>
+      <a class="bn-item" href="students.html"><span class="bn-dot"></span>Students</a>
+      <a class="bn-item" href="attendance.html"><span class="bn-dot"></span>Attendance</a>
+      <a class="bn-item" href="guardian-pickup.html"><span class="bn-dot"></span>Pickup</a>
+      <a class="bn-item" href="reports.html"><span class="bn-dot"></span>Reports</a>
+    </div>
+  </nav>
+
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../js/dashboard-admin.js"></script>
+</body>
+</html>

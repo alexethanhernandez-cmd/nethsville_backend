@@ -1,0 +1,214 @@
+:root {
+  --bg: #FAF9F5;
+  --card: #FFFFFF;
+  --green: #1F3D2F;
+  --green-hover: #17301F;
+  --green-muted: #9DAFA5;
+  --text: #2B2B2B;
+  --muted: #6B6B6B;
+  --border: #E3E1DA;
+  --radius: 16px;
+  --demo-bg: #FFFAEB;
+  --demo-border: #FEDF89;
+  --demo-text: #7A4A05;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+}
+
+input::placeholder { color: #9A9A9A; }
+
+input:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 1px var(--green);
+}
+
+/* Hide the browser's own password reveal icon so only our eye icon shows */
+input::-ms-reveal,
+input::-ms-clear,
+input::-webkit-credentials-auto-fill-button,
+input::-webkit-contacts-auto-fill-button {
+  display: none !important;
+  visibility: hidden;
+  pointer-events: none;
+  height: 0;
+  width: 0;
+}
+
+.field { margin-bottom: 16px; }
+
+.pw { position: relative; }
+.pw input { padding-right: 44px; }
+
+.eye {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.eye:hover { color: var(--text); }
+
+.btn {
+  width: 100%;
+  height: 48px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--green);
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:hover { background: var(--green-hover); }
+.btn:disabled { cursor: progress; }
+.btn.loading { background: var(--green-muted); }
+
+.spinner {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.btn.loading .spinner { display: inline-block; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.demo-note {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--demo-bg);
+  border: 1px solid var(--demo-border);
+  color: var(--demo-text);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+.demo-note strong { font-weight: 700; }
+
+.info {
+  display: none;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--demo-bg);
+  color: var(--demo-text);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.info.show { display: block; }
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(43, 43, 43, 0.4);
+  z-index: 10;
+}
+
+.overlay.open { display: flex; }
+
+.modal {
+  width: 420px;
+  max-width: 100%;
+  padding: 28px;
+  background: #fff;
+  border-radius: var(--radius);
+}
+
+.modal h2 { margin: 0 0 6px; font-size: 18px; }
+
+.modal p {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+
+.btn-outline,
+.btn-small {
+  flex: 1;
+  height: 44px;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-outline {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+}
+
+.btn-small {
+  border: 0;
+  background: var(--green);
+  color: #fff;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
